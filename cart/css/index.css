@@ -1,0 +1,672 @@
+.screen1 {
+    background:url("../images/01-bg.png") no-repeat center bottom ;
+
+}
+.screen2 {
+    background:url("../images/02-bg.png") no-repeat center bottom ;
+    /*z-index:1;*/
+}
+.screen3 {
+    background:url("../images/03-bg.png") no-repeat center bottom ;
+
+}
+.screen4 {
+    background:url("../images/04-bg.png") no-repeat center bottom ;
+}
+.screen5 {
+    background:url("../images/05-bg.png") no-repeat center bottom ;
+    /*z-index:2;*/
+}
+
+.screen7 {
+    background:url("../images/07-bg.png") no-repeat center bottom ;
+}
+.screen8 {
+    background:url("../images/08-bg.png")  center bottom ;
+}
+
+
+.box{
+    position:absolute;
+    width:850px;
+    height:430px;
+    /*background: rgba(0,0,0,0.1);*/
+    left:50%;
+    bottom:0;
+    /*transform:translateX(-50%);*/
+    /*z-index:1000;*/
+    margin-left: -450px;
+}
+.go {
+    position:fixed;
+    width: 100px;
+    height: 100px;
+    z-index:1001;
+    right:3%;
+    top:6%;
+}
+.more{
+    position:fixed;
+    width: 100px;
+    height: 100px;
+    z-index:1001;
+    right:10%;
+    top:80%;
+    animation: more01 0.28s linear infinite alternate;
+}
+
+
+.screen1 .fly{
+    position:absolute;
+    right:-80px;
+    top:-160px;
+    animation: fly01 1s linear infinite alternate;
+}
+
+.screen1 .goods{
+    position:absolute;
+    left:50%;
+    transform: translateX(-50%);
+    top:60px;
+}
+.screen1 .sofa{
+    left:200px;
+    top:-5px;
+    position:absolute;
+    animation: sofa01 1s linear infinite alternate;
+}
+
+@keyframes fly01 {
+    from{
+        transform:translateY(-30px);
+    }
+    to{
+        transform:translateY(30px);
+    }
+}
+@keyframes sofa01{
+    from{
+        transform:translateY(15px);
+    }
+    to{
+        transform:translateY(-15px)
+    }
+}
+@keyframes more01{
+    from{
+        transform:translateY(10px);
+    }
+    to{
+        transform:translateY(-10px)
+    }
+}
+
+.screen2 .text{
+    position:absolute;
+    left:50%;
+    transform: translateX(-50%);
+    top:-180px;
+    z-index:1001;
+    text-align: center;
+}
+.screen2 .text .text2{
+    left:50%;
+    transform: translateX(-50%);
+    position:absolute;
+    opacity:0;
+}
+.screen2.now .text1{
+    opacity:0;
+    position:absolute;
+}
+.screen2.now .text2{
+    opacity:1;
+    position:absolute;
+    transition:opacity 1s linear;
+}
+.screen2 .goods{
+    position: absolute;
+    left:50%;
+    transform-origin: right bottom;
+    transform: translateX(-50%) scale(0);
+    /*opacity:0;*/
+}
+
+.screen2 .input{
+    position: absolute;
+    left:535px;
+    top:-49px;
+    opacity: 0;
+    /*transform: scale(0.7);*/
+}
+
+.screen2 .search{
+    position:absolute;
+}
+.screen2  .key{
+    position:absolute;
+    left:100px;
+    top:5px;
+    opacity:0;
+}
+.screen2 .sofa{
+    position:absolute;
+    transform: scale(0.5)  ;
+    left:266px;
+    top:-36px;
+    opacity: 0;
+    z-index:1001;
+}
+.screen2.now  .text{
+    opacity:1
+}
+
+
+.screen2.now .input{
+    animation: input02 3s linear 0.2s forwards ;
+}
+.screen2.now .key{
+    /*opacity:1;*/
+    /*transition:opacity 1s linear 1s;*/
+    opacity: 1;
+    transition: all 1s linear 1.2s;
+}
+
+.screen2.now .goods{
+    transform: translateX(-50%) scale(1);
+    transition: transform 1s linear 3.2s;
+}
+
+@keyframes input02{
+    0%{
+       transform:translate(1500px,130px) ;
+        opacity: 1;
+    }
+    33.3%{
+        transform:translate(-220px,138px) ;
+        /*opacity:1;*/
+    }
+    66.6%{
+        transform:translate(-220px,138px);
+        /*opacity:1;*/
+    }
+    100%{
+        transform:scale(0.7);
+        opacity:1;
+    }
+}
+@keyframes key02 {
+    0%{
+        opacity:0;
+    }
+    33.3%{
+        opacity:0;
+    }
+    66.6%{
+        opacity:1;
+    }
+    100%{
+        opacity:1;
+    }
+}
+.screen2.leave .sofa{
+    opacity:1;
+    animation: sofa02 1s linear ;
+
+}
+@keyframes sofa02{
+    from{
+    }
+    to{
+        transform:translate(-60px,920px);
+    }
+}
+.screen3 .sofa{
+    position:absolute;
+    left:210px;
+    top:35px;
+    opacity: 0;
+    z-index:1001;
+}
+.screen3 .change{
+    position:absolute;
+    left:490px;
+    top:115px;
+}
+.screen3 .change img:last-child{
+    position:absolute;
+    opacity: 0;
+}
+.screen3  .cart{
+    position:absolute;
+    left:490px;
+    top:266px;
+}
+.screen3 .cart img:last-child{
+    position:absolute;
+    opacity: 0;
+}
+.screen3.now .sofa{
+    opacity: 1;
+}
+.screen3.now .cart img:first-child{
+    position:absolute;
+    opacity: 0;
+    transition: all 1s linear 0.1s;
+}
+.screen3.now .cart img:last-child{
+    position:static;
+    opacity: 1;
+    transition: all 1s linear 0.1s;
+}
+.screen3.now .change img:first-child{
+    position:absolute;
+    opacity: 0;
+    transition: all 1s linear 0.1s;
+}
+.screen3.now .change img:last-child{
+    position:static;
+    opacity: 1;
+    transition: all 1s linear 0.1s;
+}
+.screen3.leave .sofa{
+    animation: sofa03 1s linear ;
+}
+@keyframes sofa03 {
+    from{
+
+    }
+    to{
+        transform:translate(191px,850px) rotate(45deg) ;
+    }
+}
+
+
+.screen4 .cloud{
+    position:absolute;
+    top:-220px;
+    left:50%;
+    animation: cloud04 10s linear infinite alternate;
+}
+@keyframes cloud04 {
+    from{
+        transform:translateX(-90%);
+    }
+    to{
+        transform:translateX(20%);
+    }
+}
+.screen4 .cart_sofa{
+    z-index:1001;
+    position:relative;
+}
+.screen4 .sofa{
+    position:absolute;
+    top:10px;
+    left:375px;
+    transform:rotate(27deg);
+    opacity:0;
+}
+.screen4.now .sofa{
+    opacity:1;
+}
+.screen4 .cart{
+    position:absolute;
+    top:37px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.screen4 .address{
+    position:absolute;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    display:none;
+}
+.screen4 .address img:last-child{
+    position:absolute;
+    top:59px;
+    left:50%;
+    transform: translateX(-50%);
+    display:none;
+}
+.screen4 .text{
+    position:absolute;
+    top:-50px;
+    left:50%;
+    transform:translateX(-50%);
+}
+.screen4 .text img:last-child{
+    position:absolute;
+    opacity:0;
+}
+.screen4.now .cart_sofa{
+    transform: translateX(1000px);
+    transition:transform 2s 0.1s ;
+}
+.screen4  .text.show img:first-child{
+    position:absolute;
+    opacity:0;
+}
+.screen4  .text.show img:last-child{
+    position:static;
+    opacity:1;
+    transition:all 0.6s linear;
+}
+
+.screen5 .box{
+    height: 100%;
+    /*overflow: hidden;*/
+}
+.screen5 .box .cards{
+    z-index:1001;
+    position:absolute;
+    bottom:230px;
+    left:0;
+    background:rgba(255,0,0,0.2);
+}
+.screen5 .box .card{
+    position:relative;
+}
+.screen5 .box .order{
+    position:absolute;
+    left:143px;
+    top:0px;
+}
+.screen5 .box .sofa{
+    position:absolute;
+    left:100px;
+    top:150px;
+    transform: rotate(30deg);
+    opacity:0;
+}
+.screen5 .box .mouse{
+    height:100%;
+    width:205px;
+    overflow: hidden;
+    position:absolute;
+    right:0;
+    /*background:rgba(255,0,0,0.2);*/
+}
+.screen5 .box .mouse01{
+    position:absolute;
+    left:0;
+    bottom:230px;
+}
+.screen5 .box .mouse02{
+    position:absolute;
+    bottom:230px;
+    left:0;
+    opacity:0;
+}
+.screen5 .box .hand{
+    position:absolute;
+    right:60px;
+    bottom:-400px;
+}
+.screen5 .box .text{
+    position:absolute;
+    bottom:570px;
+}
+.screen5.now .hand{
+    bottom:0;
+    transition: bottom 0.8s linear;
+}
+.screen5.now .mouse02{
+    opacity:1;
+    transition: opacity 0.2s linear 0.8s ;
+}
+.screen5.now .sofa{
+    animation:sofa05 2s linear 1s forwards ;
+}
+@keyframes sofa05{
+    from{
+        transform: translateY(-900px) ;
+        opacity:1;
+    }
+    50%{
+        transform: translateY(-100px) rotate(30deg);
+        opacity:1;
+    }
+    to{
+        opacity:1;
+    }
+}
+.screen5.now .order{
+    top:-83px;
+    transition:top 1s linear 2s;
+}
+
+.screen5.leave .sofa{
+    animation:sofa05_06 1s linear ;
+}
+@keyframes sofa05_06 {
+    from{
+        opacity:1;
+    }
+    to{
+        opacity:1;
+        transform: translateY(600px) scale(0.2);
+    }
+}
+
+.screen6 {
+    background:url("../images/06-bg.png") no-repeat 25% bottom ;
+    /*z-index:1;*/
+}
+.screen6 .cloud01{
+    position:absolute;
+    top:-160px;
+    left:50%;
+    animation:cloud06_1 15s linear infinite alternate
+}
+.screen6 .cloud02{
+    position:absolute;
+    top:-230px;
+    left:50%;
+    animation:cloud06_2 20s linear infinite alternate
+}
+@keyframes cloud06_1 {
+    from{
+        transform:translateX(-100%);
+    }
+    to{
+        transform:translateX(20%);
+    }
+}
+@keyframes cloud06_2 {
+    from{
+        transform:translateX(20%);
+    }
+    to{
+        transform:translateX(-100%);
+    }
+}
+.screen6.catch .package{
+    z-index:1001;
+    position:absolute;
+    left:142px;
+    top:-85px;
+    animation:package 2.5s linear forwards;
+}
+@keyframes package {
+    from{
+        transform:translateX(-400px);
+    }
+    33%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1);
+    }
+    to{
+       transform:translateY(400px) scale(0.5);
+    }
+}
+.screen6 .car{
+    position:relative;
+    z-index:1002;}
+.screen6 .express{
+    position:absolute;
+    bottom:0;
+    left:110px;
+}
+.screen6.now{
+    background:url("../images/06-bg.png") no-repeat 100% bottom;
+    transition:background 1s linear 1.5s;
+}
+.screen6 .buyer{
+    position:absolute;
+    bottom:110px;
+    left:155px;
+    opacity:0;
+}
+.screen6 .address{
+    position:absolute;
+    bottom:110px;
+    left:155px;
+    opacity:0;
+}
+.screen6.now .buyer{
+    opacity:1;
+    transition:opacity 0.1s linear 1.5s
+}
+.screen6.now .address{
+    opacity:1;
+    transition:opacity 0.1s linear 2.2s
+}
+.screen6 .worker{
+    z-index:1003;
+    position:absolute;
+    left:0;
+    bottom:0;
+    transform-origin: left bottom;
+    transform:scale(0);
+}
+.screen6.now .worker{
+    animation:worker06 1s linear 2.5s forwards;
+}
+@keyframes worker06 {
+    from{
+        transform:scale(0);
+    }
+    33.3%{
+        transform:scale(1);
+    }
+    66.7%{
+        transform:translateY(-100px);
+    }
+    to{
+        transform:translate(250px,-100px) scale(1);
+    }
+}
+.screen6 .say{
+    position:absolute;
+    left:500px;
+    top:-115px;
+    opacity:0;
+}
+.screen6.now .say{
+    opacity:1;
+    transition:opacity 0.2s linear 3.5s;
+}
+.screen6 .home{
+    position:absolute;
+    left:780px;
+    bottom:113px;
+}
+.screen6 .door{
+    position:relative;
+    opacity:0;
+}
+.screen6.now .door{
+    opacity:1;
+    transition:opacity 0.3s linear 3.7s;
+}
+.screen6 .person{
+    position:absolute;
+    bottom:0;
+    right:0;
+    transform-origin: right bottom;
+    transform:scale(0);
+}
+
+.screen6.now .person{
+    transform:scale(1);
+    right:150px;
+    transition:transform 0.5s linear 4s,right 0.5s linear 4.5s;
+}
+.screen6 .text{
+    position:absolute;
+    left:170px;
+    top:-100px;
+}
+.screen6 .text img:first-child{
+    position:relative;
+}
+.screen6 .text img:last-child{
+    position:absolute;
+    left:0;
+    top:0;
+    opacity:0;
+}
+.screen6.now .text img:last-child{
+    opacity:1;
+    transition:opacity 0.5s linear 3s;
+}
+.screen7 .star{
+    position:absolute;
+    left:152px;
+    top:-28px;
+}
+.screen7 .star img{
+    float:left;
+    margin-left: 6px;
+    opacity:0;
+
+}
+.screen7 .text{
+    position:absolute;
+    left:170px;
+    top:8px;
+    opacity:0;
+}
+.screen7.now .star img{
+    opacity:1;
+    transition:opacity 0.2s linear ;
+}
+.screen7.now .text{
+    opacity:1;
+    transition:opacity 1s linear 1s ;
+}
+.screen8 .btn{
+    position:absolute;
+    left:50%;
+    bottom:50%;
+    transform:translate(-50%,50%);
+}
+.screen8 .btn img:first-child{
+    position:relative;
+}
+.screen8 .btn img:last-child{
+    position:absolute;
+    left:0;
+    top:0;
+    opacity:0;
+}
+.screen8 .btn img:last-child:hover{
+    opacity: 1;
+}
+.screen8 .again{
+    position:absolute;
+    left:70%;
+    top:50%;
+}
+.screen8 .hand{
+    /*background:rgba(0,0,0,0.1);*/
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,10%);
+}

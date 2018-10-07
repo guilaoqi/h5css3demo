@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<canvas width="600" height="400"></canvas>
+<script>
+
+    var Person=function () {
+        this.direction=0;
+        this.ctx=document.querySelector("canvas").getContext("2d");
+        this.src='image/04.png';
+        this.canvasWidth=this.ctx.canvas.width;
+        this.canvasHeight=this.ctx.canvas.height;
+        this.step=5;
+        this.stepX=0;
+        this.stepY=0;
+        Person.prototype.loadPicture=function(callback) {
+            var image=new Image();
+            image.onload=function () {
+                callback&&callback(image);
+            };
+            image.src=this.src;
+        };
+        var that=this;
+        this.loadPicture(function(image){
+            console.log(that.ctx);
+            that.PicW=image.width/4;
+            that.PicH=image.height/4;
+            that.X0=that.canvasWidth/2-that.PicW/2;
+            that.Y0=that.canvasHeight/2-that.PicH/2;
+            var i=0;
+            var jx=0;
+            var jy=0;
+            setInterval(function () {
+                i=i>2?0:i+1;
+                switch(that.direction){
+                    case 0:
+                            jy+=5;
+                        break;
+                    case 1:
+                            jx-=5;
+                        break;
+                    case 2:
+                            jx+=5;
+                        break;
+                    case 3:
+                            jy-=5;
+                        break;
+                }
+                that.ctx.clearRect(0,0,that.canvasWidth,that.canvasHeight);
+                that.ctx.drawImage(image,that.PicW*i,that.PicH*that.direction,that.PicW,that.PicH,that.X0+that.stepX+jx,that.Y0+that.stepY+jy,that.PicW,that.PicH);
+            },100);
+            document.onkeydown=function (e) {
+                switch(e.keyCode){
+                    case 37:
+                        that.direction=1;
+                        that.stepX-=that.step;
+                        console.log("左");
+                        break;
+                    case 38:
+                        that.direction=3;
+                        that.stepY-=that.step;
+                        console.log("上");
+                        break;
+                    case 39:
+                        that.direction=2;
+                        that.stepX+=that.step;
+                        console.log("右");
+                        break;
+                    case 40:
+                        that.direction=0;
+                        that.stepY+=that.step;
+                        console.log("下");
+                        break;
+                }
+            }
+        });
+    };
+
+    new Person();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<canvas width="600" height="400"></canvas>
+<script>
+    var LineChart=function (data){
+        this.myCanvas=document.querySelector("canvas");
+        this.ctx=this.myCanvas.getContext("2d");
+        this.gridSize=10;
+        this.width=this.ctx.canvas.width;
+        this.height=this.ctx.canvas.height;
+        this.padding=20;
+        this.X0=this.padding;
+        this.Y0=this.height-this.padding;
+        this.arrowSize=10;
+        this.spotSize=6;
+        LineChart.prototype.init=function(data) {
+            this.drawGrid();
+            this.drawAxis();
+            this.drawSpot(data);
+        };
+//            画网格
+        LineChart.prototype.drawGrid=function () {
+//            画X方向的线
+            var lineXnum = Math.floor(this.height / this.gridSize);
+            for (var i = 1; i < lineXnum; i++) {
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, i * this.gridSize - 0.5);
+                this.ctx.lineTo(this.width, i * this.gridSize - 0.5);
+                this.ctx.strokeStyle = "#ccc";
+                this.ctx.stroke();
+            }
+//            画Y方向的线
+            var lineYnum = Math.floor(this.width / this.gridSize);
+            for (var i = 1; i < lineYnum; i++) {
+                this.ctx.beginPath();
+                this.ctx.moveTo( i * this.gridSize - 0.5,0);
+                this.ctx.lineTo( i * this.gridSize - 0.5,this.height);
+                this.ctx.strokeStyle = "#ccc";
+                this.ctx.stroke();
+            }
+        };
+        LineChart.prototype.drawAxis=function () {
+//            X轴
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.X0, this.Y0);
+            this.ctx.lineTo(this.width-this.padding,this.Y0);
+            this.ctx.lineTo(this.width-this.padding-this.arrowSize,this.Y0-this.arrowSize/2);
+            this.ctx.lineTo(this.width-this.padding-this.arrowSize,this.Y0+this.arrowSize/2);
+            this.ctx.lineTo(this.width-this.padding,this.Y0);
+            this.ctx.strokeStyle="#000";
+            this.ctx.stroke();
+            this.ctx.fill();
+//            Y轴
+            this.ctx.beginPath();
+            this.ctx.moveTo(this.X0, this.Y0);
+            this.ctx.lineTo(this.X0,this.padding);
+            this.ctx.lineTo(this.X0-this.arrowSize/2,this.padding+this.arrowSize);
+            this.ctx.lineTo(this.X0+this.arrowSize/2,this.padding+this.arrowSize);
+            this.ctx.lineTo(this.X0,this.padding);
+            this.ctx.strokeStyle="#000";
+            this.ctx.stroke();
+            this.ctx.fill();
+        };
+        LineChart.prototype.drawSpot=function (data) {
+            var that=this;
+            var canvasX=this.X0;
+            var canvasY=this.Y0;
+            data.forEach(function (item,i) {
+                var itemX=item.x+that.padding;
+                var itemY=that.height-item.y-that.padding;
+                that.ctx.beginPath();
+//                that.ctx.moveTo(itemX-that.spotSize/2, itemY-that.spotSize/2);
+//                that.ctx.lineTo(itemX+that.spotSize/2, itemY-that.spotSize/2);
+//                that.ctx.lineTo(itemX+that.spotSize/2, itemY+that.spotSize/2);
+//                that.ctx.lineTo(itemX-that.spotSize/2, itemY+that.spotSize/2);
+//                that.ctx.lineTo(itemX-that.spotSize/2, itemY-that.spotSize/2);
+                that.ctx.rect(itemX-that.spotSize/2, itemY-that.spotSize/2,that.spotSize, that.spotSize);
+                that.ctx.fill();
+
+                that.ctx.moveTo(canvasX,canvasY);
+                that.ctx.lineTo(itemX,itemY);
+                that.ctx.stroke();
+                canvasX=itemX;
+                canvasY=itemY;
+            })
+        };
+    };
+    /*3.初始化*/
+        var data = [
+        {
+            x: 100,
+            y: 120
+        },
+        {
+            x: 200,
+            y: 160
+        },
+        {
+            x: 300,
+            y: 240
+        },
+        {
+            x: 400,
+            y: 300
+        },
+        {
+            x: 500,
+            y: 80
+        }
+    ];
+    var lineChart = new LineChart();
+    lineChart.init(data);
+</script>
+</body>
+</html>
