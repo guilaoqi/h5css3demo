@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .map {
+            width: 800px;
+            height: 600px;
+            background-color: #CCC;
+            position: relative;
+            margin: auto;
+
+        }
+
+        div {
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="map"></div>
+
+
+
+<script>
+(function () {
+    function Food(width, height, color) {
+        this.width = width || 20;
+        this.height = height || 20;
+        this.color = color || "green";
+        this.element = document.createElement("div");
+    }
+    Food.prototype.init = function (map) {
+        var element = this.element;
+        map.appendChild(element);
+        element.style.width = this.width + "px";
+        element.style.height = this.height + "px";
+        element.style.backgroundColor = this.color;
+        element.style.position = "absolute";
+        var x = Math.floor(Math.random() * (map.offsetWidth / this.width)) * this.width;
+        console.log(x);
+        var y = Math.floor(Math.random() * (map.offsetHeight / this.height)) * this.height;
+        console.log(y);
+        element.style.left = x + "px";
+        element.style.top = y + "px";
+    };
+    window.Food = Food;
+}())
+</script>
+<script>
+(function () {
+    //自定义构造函数Snake；
+    function Snake(width, height) {
+        this.body = [
+            {x: 4, y: 3, color: "red"},
+            {x: 3, y: 3, color: "deepskyblue"}
+        ];
+        this.width = width || 20;
+        this.height = height || 20;
+        this.direction = "right";
+        this.fake = false;
+        this.list = [];
+    }
+    //Snake的原型方法move；
+    Snake.prototype.move = function (food, map) {
+        this.body.unshift({
+            x: this.body[0].x,
+            y: this.body[0].y,
+            color: this.body[0].color
+        });
+        this.body[1].color = this.body[2].color;
+        switch (this.direction) {
+            case "left":
+                this.body[0].x--;
+                break;
+            case "right":
+                this.body[0].x++;
+                break;
+            case "up":
+                this.body[0].y--;
+                break;
+            case "down":
+                this.body[0].y++;
+                break;
+        }
+        var fx = food.element.offsetLeft;
+        var fy = food.element.offsetTop;
+
+        if (this.body[0].x * this.width == fx && this.body[0].y * this.width == fy) {
+            // clearInterval(timeId);
+            food.init(map);
+        } else if (this.fake) {
+        }
+        else {
+            this.body.pop();
+        }
+    };
+
+    //Snake的原型方法show，在map中显现Snake；
+    Snake.prototype.show = function (map) {
+        this.remove();
+        for (var i = 0; i < this.body.length; i++) {
+            var element = document.createElement("div");
+            element.style.width = this.width + "px";
+            element.style.height = this.height + "px";
+            element.style.backgroundColor = this.body[i].color;
+            element.style.left = this.body[i].x * this.width + "px";
+            element.style.top = this.body[i].y * this.width + "px";
+            element.style.position = "absolute";
+            map.appendChild(element);
+            this.list.push(element);
+        }
+    };
+
+    //Snake的原型方法remove供show用；
+    Snake.prototype.remove = function () {
+        for (var i = 0; i < this.list.length; i++) {
+            this.list[0].parentNode.removeChild(this.list[0]);
+            this.list.splice(0, 1);
+        }
+    };
+    window.Snake = Snake;
+}())
+</script>
+<script>
+(function () {
+    //
+    var that = null;
+    var num = 200;
+
+    function Play(map, food, snake) {
+        this.map = map;
+        this.food = food;
+        this.snake = snake;
+        that = this;
+    }
+
+    Play.prototype.animate = function () {
+        this.timeId = setInterval(function () {
+            this.snake.move(this.food, this.map);
+            var snakeX = this.snake.body[0].x;
+//                console.log(snakeX);
+            var snakeY = this.snake.body[0].y;
+            var mapwidth = this.map.offsetWidth / this.snake.width;
+//                console.log(mapwidth);
+            var mapheight = this.map.offsetHeight / this.snake.height;
+            if (snakeX > mapwidth - 1 || snakeX < 0 || snakeY < 0 || snakeY > mapheight - 1) {
+                clearInterval(this.timeId);
+                alert("GAME OVER");
+            } else {
+                this.snake.show(this.map);
+            }
+        }.bind(that), num);
+    };
+
+        var EventUtil = {
+    addHandler: function (element, type, handler) {
+        if (element.addEventListener)
+            element.addEventListener(type, handler, false);
+        else if (element.attachEvent)
+            element.attachEvent("on" + type, handler);
+        else
+            element["on" + type] = handler;
+    },
+    removeHandler: function (element, type, handler) {
+        if(element.removeEventListener)
+            element.removeEventListener(type, handler, false);
+        else if(element.detachEvent)
+            element.detachEvent("on" + type, handler);
+        else
+            element["on" + type] = handler;
+    },
+    /**
+     * 监听触摸的方向
+     * @param target            要绑定监听的目标元素
+     * @param isPreventDefault  是否屏蔽掉触摸滑动的默认行为（例如页面的上下滚动，缩放等）
+     * @param upCallback        向上滑动的监听回调（若不关心，可以不传，或传false）
+     * @param rightCallback     向右滑动的监听回调（若不关心，可以不传，或传false）
+     * @param downCallback      向下滑动的监听回调（若不关心，可以不传，或传false）
+     * @param leftCallback      向左滑动的监听回调（若不关心，可以不传，或传false）
+     */
+    listenTouchDirection: function (target, isPreventDefault, upCallback, rightCallback, downCallback, leftCallback) {
+        this.addHandler(target, "touchstart", handleTouchEvent);
+        this.addHandler(target, "touchend", handleTouchEvent);
+        this.addHandler(target, "touchmove", handleTouchEvent);
+        var startX;
+        var startY;
+        function handleTouchEvent(event) {
+            switch (event.type){
+                case "touchstart":
+                    startX = event.touches[0].pageX;
+                    startY = event.touches[0].pageY;
+                    break;
+                case "touchend":
+                    var spanX = event.changedTouches[0].pageX - startX;
+                    var spanY = event.changedTouches[0].pageY - startY;
+
+                    if(Math.abs(spanX) > Math.abs(spanY)){      //认定为水平方向滑动
+                        if(spanX > 30){         //向右
+                            if(rightCallback)
+                                rightCallback();
+                        } else if(spanX < -30){ //向左
+                            if(leftCallback)
+                                leftCallback();
+                        }
+                    } else {                                    //认定为垂直方向滑动
+                        if(spanY > 30){         //向下
+                            if(downCallback)
+                                downCallback();
+                        } else if (spanY < -30) {//向上
+                            if(upCallback)
+                                upCallback();
+                        }
+                    }
+
+                    break;
+                case "touchmove":
+                    //阻止默认行为
+                    if(isPreventDefault)
+                        event.preventDefault();
+                    break;
+            }
+        }
+    }
+};
+
+
+
+
+
+    Play.prototype.bindKey = function () {
+
+        EventUtil.listenTouchDirection(document, true, function(){this.snake.direction = "up";}.bind(that),  function(){this.snake.direction = "right";}.bind(that),  function(){this.snake.direction = "down";}.bind(that),  function(){this.snake.direction = "left";}.bind(that));
+
+        document.addEventListener("keydown", function (e) {
+            switch (e.keyCode) {
+                case 37:
+                    this.snake.direction = "left";
+                    break;
+                case 38:
+                    this.snake.direction = "up";
+                    break;
+                case 39:
+                    this.snake.direction = "right";
+                    break;
+                case 40:
+                    this.snake.direction = "down";
+                    break;
+                case 87:
+                    num *= 0.8;
+                    clearInterval(this.timeId);
+                    this.animate();
+                    break;
+                case 83:
+                    num *= 1.25;
+                    clearInterval(this.timeId);
+                    this.animate();
+                    break;
+                case 88:
+                    this.snake.fake=true;
+                    this.snake.move(this.food, this.map);
+                    this.snake.fake=false;
+            }
+            console.log(e.keyCode);
+        }.bind(that), false)
+    };
+
+    Play.prototype.init = function () {
+        this.food.init(this.map);
+        this.animate();
+        this.bindKey();
+    };
+    window.Play = Play;
+    
+}())
+</script>
+<script>
+    var map = document.querySelector(".map");
+    var food = new Food(20, 20);
+    var snake = new Snake();
+    var play = new Play(map, food, snake);
+    play.init();
+</script>
+</body>
+</html>
